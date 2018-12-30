@@ -1,0 +1,24 @@
+<nav class="ui fixed inverted menu" role="navigation">
+  <div class="ui container">
+    <a href="/" class="header item">
+      <img class="logo" src="<%= Routes.static_path(@conn, "/images/chip.svg") %>" alt="Masterminds Logo - CPU Chip"/>
+       <span class="app-name"> Masterminds </span>
+      </a>
+       <%= if assigns[:current_user] do %>
+          <a href="/posts" class="item">Posts</a>
+           <div class="item">
+         <%= link raw(~s'<i class="sign out alternate icon"></i>Logout'), to: Routes.auth_path(@conn, :logout), method: :delete, class: "ui red button" %>
+        </div>
+          <% else %>
+          <div class="item">
+           <%= link raw(~s'<i class="sign in alternate icon"></i>Log in'), to: "/auth/auth0", class: "ui primary button" %>
+          </div>
+        <% end %>
+    <div class="right menu">
+      <div class="item">
+       <%= link raw(~s'<i class="edit icon"></i>Posts'), to: Routes.post_path(@conn, :index), class: "ui teal button" %>
+      </div>
+
+    </div>
+  </div>
+</nav>
