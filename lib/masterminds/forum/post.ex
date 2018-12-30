@@ -1,4 +1,7 @@
 defmodule Masterminds.Forum.Post do
+  @moduledoc """
+    The Post Model
+  """
   use Ecto.Schema
   import Ecto.Changeset
 
