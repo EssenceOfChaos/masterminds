@@ -1,0 +1,32 @@
+<h1>Listing Quizzes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Topic</th>
+      <th>User</th>
+      <th>Points</th>
+      <th>Points possible</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for quiz <- @quizzes do %>
+    <tr>
+      <td><%= quiz.topic %></td>
+      <td><%= quiz.user %></td>
+      <td><%= quiz.points %></td>
+      <td><%= quiz.points_possible %></td>
+
+      <td>
+        <%= link "Show", to: Routes.quiz_path(@conn, :show, quiz) %>
+        <%= link "Edit", to: Routes.quiz_path(@conn, :edit, quiz) %>
+        <%= link "Delete", to: Routes.quiz_path(@conn, :delete, quiz), method: :delete, data: [confirm: "Are you sure?"] %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Quiz", to: Routes.quiz_path(@conn, :new) %></span>

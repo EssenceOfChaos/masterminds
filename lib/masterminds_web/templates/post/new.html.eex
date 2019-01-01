@@ -1,5 +1,7 @@
 <h1>New Post</h1>
 
-<%= render "form.html", Map.put(assigns, :action, Routes.post_path(@conn, :create)) %>
+<div class="ui raised very padded text container segment">
+  <%= render "form.html", Map.put(assigns, :action, Routes.post_path(@conn, :create)) %>
+</div>
 
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+<span><%= link "Back", to: Routes.post_path(@conn, :index), class: "ui secondary button" %></span>

@@ -1,34 +1,33 @@
 <h1>Listing Posts</h1>
-
-<table>
+<table class="ui fixed single line celled table">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Tags</th>
-      <th>Image</th>
-      <th>Slug</th>
-
-      <th></th>
+     <th class="four wide">Title</th>
+     <th class="eight wide">Preview</th>
+     <th col="3"></th>
     </tr>
   </thead>
   <tbody>
-<%= for post <- @posts do %>
+  <%= for post <- @posts do %>
     <tr>
-      <td><%= post.title %></td>
+      <td><strong><%= post.title %></strong></td>
       <td><%= post.body %></td>
-      <td><%= post.tags %></td>
-      <td><%= post.image %></td>
-      <td><%= post.slug %></td>
-
-      <td>
-        <%= link "Show", to: Routes.post_path(@conn, :show, post) %>
-        <%= link "Edit", to: Routes.post_path(@conn, :edit, post) %>
-        <%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"] %>
+      <td style="text-align: center">
+        <%= link "Read more", to: Routes.post_path(@conn, :show, post), class: "tiny ui compact basic green button" %>
+        <%= link "Delete", to: Routes.post_path(@conn, :delete, post), method: :delete, data: [confirm: "Are you sure?"], class: "tiny ui compact basic red button" %>
       </td>
     </tr>
-<% end %>
+    <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+     <th><strong>Total:</strong> <%=length(@posts)%> <%=ngettext("post", "posts", length(@posts))%></th>
+     <th></th>
+     <th col="3"></th>
+    </tr>
+  </tfoot>
 </table>
 
-<span><%= link "New Post", to: Routes.post_path(@conn, :new) %></span>
+<table>
+<br />
+<span><%= link "New Post", to: Routes.post_path(@conn, :new), class: "small ui compact primary button" %></span>

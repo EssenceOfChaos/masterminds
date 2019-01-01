@@ -6,8 +6,8 @@ defmodule MastermindsWeb.PostController do
 
   plug :secure
 
-  def index(conn, _params) do
-    posts = Forum.list_posts()
+  def index(conn, params) do
+    posts = Forum.list_posts(params)
     render(conn, "index.html", posts: posts)
   end
 
@@ -17,7 +17,8 @@ defmodule MastermindsWeb.PostController do
   end
 
   def create(conn, %{"post" => post_params}) do
-    case Forum.create_post(post_params) do
+    user = get_session(conn, :current_user)
+    case Forum.create_post(user, post_params) do
       {:ok, post} ->
         conn
         |> put_flash(:info, "\"#{post.title}\" was created successfully.")
@@ -39,9 +40,18 @@ defmodule MastermindsWeb.PostController do
   end
 
   def edit(conn, %{"id" => id}) do
-    post = Forum.get_post!(id)
-    changeset = Forum.change_post(post)
-    render(conn, "edit.html", post: post, changeset: changeset)
+    current_user = get_session(conn, :current_user)
+    post = Forum.get(id, true)
+
+    if tl(String.split(post.author, "/")) == current_user.id do
+      changeset = Forum.change_post(post)
+      render(conn, "edit.html", post: post, changeset: changeset)
+    else
+      conn
+      |> put_flash(:error, "Sorry, authors may only edit their own posts!")
+      |> redirect(to: Routes.post_path(conn, :index))
+    end
+
   end
 
   def update(conn, %{"id" => id, "post" => post_params}) do
@@ -58,13 +68,25 @@ defmodule MastermindsWeb.PostController do
     end
   end
 
+  @spec delete(Plug.Conn.t(), map()) :: Plug.Conn.t()
   def delete(conn, %{"id" => id}) do
-    post = Forum.get_post!(id)
-    {:ok, _post} = Forum.delete_post(post)
+    current_user = get_session(conn, :current_user)
+    post = Forum.get(id, true)
 
-    conn
-    |> put_flash(:info, "Post deleted successfully.")
-    |> redirect(to: Routes.post_path(conn, :index))
+## post.author takes the shape of name/unique_id
+## to ensure post ownership we verify the id with current user id
+## the following statement splits the string on "/"
+## takes the tl aka the id and turns it back into a string and removes extra whitespace
+    if String.trim(to_string(tl(String.split(post.author, "/")))) == current_user.id do
+      {:ok, _post} = Forum.delete_post(post)
+      conn
+      |> put_flash(:info, "Post deleted successfully.")
+      |> redirect(to: Routes.post_path(conn, :index))
+    else
+      conn
+      |> put_flash(:error, "Sorry, authors may only delete their own posts!")
+      |> redirect(to: Routes.post_path(conn, :index))
+    end
   end
 
   ## PRIVATE ##

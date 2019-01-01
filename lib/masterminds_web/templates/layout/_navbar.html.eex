@@ -1,27 +1,48 @@
 <nav class="ui fixed inverted menu" role="navigation">
   <div class="ui container">
+
     <a href="/" class="header item">
       <img class="logo" src="<%= Routes.static_path(@conn, "/images/chip.svg") %>" alt="Masterminds Logo - CPU Chip"/>
        <span class="app-name"> Masterminds </span>
-      </a>
-      <%= if assigns[:current_user] do %>
-          <a href="/posts" class="item">Posts</a>
+    </a>
 
-        <div class="item">
-         <%= link raw(~s'<i class="sign out alternate icon"></i>Logout'), to: Routes.auth_path(@conn, :logout), method: :delete, class: "ui red button" %>
-        </div>
-      <% else %>
-
-        <div class="item">
-         <%= link raw(~s'<i class="sign in alternate icon"></i>Log in'), to: "/auth/auth0", class: "ui primary button" %>
-        </div>
-      <% end %>
-
-    <div class="right menu">
-      <div class="item">
-       <%= link raw(~s'<i class="edit icon"></i>Posts'), to: Routes.post_path(@conn, :index), class: "ui teal button" %>
-      </div>
+    <div class="item">
+      <a href="#">Link</a>
     </div>
 
+    <div class="right menu">
+
+     <%= if logged_in?(@conn) do %>
+
+      <div class="item">
+       <%= link raw(~s'<i class="list alternate icon"></i>Posts'), to: Routes.post_path(@conn, :index), class: "ui compact teal button" %>
+      </div>
+
+    <div class="item">
+      <%= link raw(~s'<i class="sign out alternate icon"></i>Log out'), to: Routes.auth_path(@conn, :logout), class: "ui compact red button" %>
+     </div>
+
+      <div class="item">
+        <div class="ui icon input">
+          <%= form_for @conn, Routes.post_path(@conn, :index),
+          [method: :get, class: "ui search"], fn f -> %>
+          <%= search_input f, :query, class: "prompt", placeholder: "search for posts..." %>
+          <%= submit "Search", class: "ui compact inverted primary button" %>
+          <% end %>
+        </div>
+      </div>
+
+
+
+
+      <% else %>
+
+      <div class="item">
+        <%= link raw(~s'<i class="sign in alternate icon"></i>Log in'), to: "/auth/auth0", class: "ui compact primary button" %>
+      </div>
+
+      <% end %>
+
+    </div>
   </div>
 </nav>

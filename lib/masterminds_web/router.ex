@@ -26,6 +26,7 @@ defmodule MastermindsWeb.Router do
     get "/", PageController, :index
     get "/logout", AuthController, :logout
     resources "/posts", PostController
+    get "/quizzes/:topic", QuizController, :begin
   end
 
   # Other scopes may use custom stacks.

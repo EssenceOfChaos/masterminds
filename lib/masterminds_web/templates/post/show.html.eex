@@ -27,7 +27,24 @@
     <%= @post.slug %>
   </li>
 
-</ul>
+  <li>
+    <strong>Author:</strong>
+      <%= unless is_nil(@post.author) do %>
+        <%= format_name(@post.author) %>
+        <% else %>
+        <span> Anonymous </span>
+      <% end %>
+  </li>
 
-<span><%= link "Edit", to: Routes.post_path(@conn, :edit, @post) %></span>
-<span><%= link "Back", to: Routes.post_path(@conn, :index) %></span>
+</ul>
+<br />
+<div class="ui buttons">
+  <%= link "Edit", to: Routes.post_path(@conn, :edit, @post), class: "ui button" %>
+  <div class="or"></div>
+  <%= link "Back", to: Routes.post_path(@conn, :index), class: "ui positive button" %>
+</div>
+
+<br />
+
+
+

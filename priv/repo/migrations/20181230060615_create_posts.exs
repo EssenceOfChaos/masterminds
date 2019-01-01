@@ -9,6 +9,8 @@ defmodule Masterminds.Repo.Migrations.CreatePosts do
       add :image, :string
       add :slug, :string
 
+      add :author, :string
+
       timestamps()
     end
 

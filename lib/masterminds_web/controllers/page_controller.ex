@@ -2,6 +2,8 @@ defmodule MastermindsWeb.PageController do
   use MastermindsWeb, :controller
 
   def index(conn, _params) do
-    render(conn, "index.html", current_user: get_session(conn, :current_user))
+    conn
+    |> IO.inspect
+    |> render("index.html", current_user: get_session(conn, :current_user))
   end
 end

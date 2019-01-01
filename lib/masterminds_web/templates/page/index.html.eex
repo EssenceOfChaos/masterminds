@@ -1,35 +1,41 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed and maintainability.</p>
+<section class="themm-hero" style="text-align: center">
+  <h1><%= gettext "Welcome to %{name}!", name: "Masterminds" %></h1>
+  <h5><em>Because Knowledge is Power</em></h5>
+
+
+<%= unless is_nil(@current_user) do %>
+<h2 class="ui teal icon header">
+  <i class="trophy icon"></i>
+  <div class="content">
+    Assess your skills
+    <div class="sub header">Take one of our short quizzes and see how you measure up</div>
+  </div>
+</h2>
+<% end %>
 </section>
 
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-    </ul>
-  </article>
+<section >
+<div class="ui big very relaxed list">
+  <div class="item">
+    <img class="ui mini image" src="<%= Routes.static_path(@conn, "/images/go-logo.png") %>">
+    <div class="content">
+      <a class="header" href="/quizzes/golang">Golang</a>
+      <div class="description">25 questions <br /> Approximately 30 minutes <br /> Difficulty: Hard </div>
+    </div>
+  </div>
+  <div class="item">
+      <img class="ui mini image" src="<%= Routes.static_path(@conn, "/images/elixir-logo.png") %>">
+    <div class="content">
+      <a class="header" href="/quizzes/elixir">Elixir</a>
+      <div class="description">20 questions <br /> Approximately 25 minutes <br /> Difficulty: Hard </div>
+    </div>
+  </div>
+  <div class="item">
+      <img class="ui mini image" src="<%= Routes.static_path(@conn, "/images/javascript-logo.png") %>">
+    <div class="content">
+      <a class="header" href="/quizzes/javascript">Javascript</a>
+      <div class="description">30 questions <br /> Approximately 35 minutes <br /> Difficulty: Medium</div>
+    </div>
+  </div>
+</div>
 </section>

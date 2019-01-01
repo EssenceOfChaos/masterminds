@@ -9,8 +9,11 @@ defmodule Masterminds.Forum do
   alias Masterminds.Forum.Post
 
 
-  def list_posts do
-    Repo.all(Post)
+  def list_posts(params) do
+    search_term = get_in(params, ["query"])
+    Post
+    |> Post.search(search_term)
+    |> Repo.all()
   end
 
 
@@ -26,8 +29,10 @@ defmodule Masterminds.Forum do
   def get_post!(id), do: Repo.get!(Post, id)
 
 
-  def create_post(attrs \\ %{}) do
-    %Post{}
+  def create_post(user, attrs \\ %{}) do
+    author = "#{user.name}/#{user.id}"
+
+    %Post{author: author}
     |> Post.changeset(attrs)
     |> Repo.insert()
   end
