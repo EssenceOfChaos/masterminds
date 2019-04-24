@@ -1,5 +1,6 @@
 defmodule MastermindsWeb.Router do
   use MastermindsWeb, :router
+  require Ueberauth
 
   pipeline :browser do
     plug :accepts, ["html"]

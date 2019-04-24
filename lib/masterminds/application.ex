@@ -11,7 +11,7 @@ defmodule Masterminds.Application do
       # Start the Ecto repository
       Masterminds.Repo,
       # Start the endpoint when the application starts
-      MastermindsWeb.Endpoint
+      MastermindsWeb.Endpoint,
       # Starts a worker by calling: Masterminds.Worker.start_link(arg)
       # {Masterminds.Worker, arg},
     ]

@@ -1,6 +1,6 @@
 defmodule Masterminds.Auth.UserFromAuth do
-  @moduledoc """
-  Retrieve the user information from an auth request
+ @moduledoc """
+  Retrieve the user information from the auth request
   """
   require Logger
   require Poison
@@ -21,10 +21,10 @@ defmodule Masterminds.Auth.UserFromAuth do
     {:ok, basic_info(auth)}
   end
 
-  # github avatar
+  # github does it this way
   defp avatar_from_auth(%{info: %{urls: %{avatar_url: image}}}), do: image
 
-  # facebook avatar
+  # facebook does it this way
   defp avatar_from_auth(%{info: %{image: image}}), do: image
 
   # default case if nothing matches

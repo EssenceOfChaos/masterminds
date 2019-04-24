@@ -1,12 +1,12 @@
 defmodule Masterminds.MixProject do
   @moduledoc false
   use Mix.Project
-
+  @version "0.1.0"
   def project do
     [
       app: :masterminds,
-      version: "0.1.0",
-      elixir: "~> 1.5",
+      version: @version,
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -42,15 +42,18 @@ defmodule Masterminds.MixProject do
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.1.2"},
       {:plug_cowboy, "~> 2.0"},
       ## ADDED DEPS ##
-      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      # Cloud RabbitMQ client
+      {:amqp, "~> 0.2.3"},
       {:ueberauth, "~> 0.5"},
       {:ueberauth_auth0, "~> 0.3"},
       {:httpoison, "~> 1.4"},
       {:poison, "~> 3.1"},
-      {:slugger, "~> 0.3"}
+      {:slugger, "~> 0.3"},
+      {:gen_state_machine, "~> 2.0.5"},
+      {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false}
     ]
   end
 

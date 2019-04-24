@@ -9,6 +9,7 @@ defmodule MastermindsWeb.AuthController do
   def logout(conn, _params) do
     conn
     |> put_flash(:info, "You have been logged out!")
+    |> assign(:user_signed_in?, false)
     |> configure_session(drop: true)
     |> redirect(to: "/")
   end
@@ -25,8 +26,9 @@ defmodule MastermindsWeb.AuthController do
       {:ok, user} ->
         conn
         |> assign(:current_user, user)
+        |> assign(:user_signed_in?, true)
         |> put_flash(:info, "Successfully authenticated as " <> user.name <> ".")
-        |> put_session(:current_user, user)
+        |> put_session(:user_id, user.id)
         |> redirect(to: "/")
 
       {:error, reason} ->
